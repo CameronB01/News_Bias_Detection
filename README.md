@@ -1,0 +1,2 @@
+## Political Bias Detection
+This current project is aimed at determining the political bias of news articles. I believe a lot of political divisions stem from people's misinterpretation of articles they assume are "centered" but may not be. The goal of this project is to create an article recommendation system that helps users find articles with opposing views, thereby providing a more balanced perspective.
