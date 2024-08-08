@@ -6,8 +6,8 @@ matplotlib
 scikit-learn
 wordcloud
 joblib
-spacy
-numpy
+spacy==3.7.4
+numpy==1.26.4
 newspaper3k
 nltk
 torch
