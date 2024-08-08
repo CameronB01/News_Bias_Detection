@@ -8,7 +8,7 @@ wordcloud
 joblib
 spacy
 numpy
-newspaper
+newspaper3k
 nltk
 time
 torch
