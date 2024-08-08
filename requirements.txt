@@ -10,7 +10,6 @@ spacy
 numpy
 newspaper3k
 nltk
-time
 torch
 transformers
 vaderSentiment
