@@ -13,5 +13,4 @@ nltk
 torch
 transformers
 vaderSentiment
-collections
 tqdm
