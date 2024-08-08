@@ -16,3 +16,4 @@ vaderSentiment
 tqdm
 umap-learn
 lxml_html_clean
+xgboost
