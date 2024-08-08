@@ -14,3 +14,4 @@ torch
 transformers
 vaderSentiment
 tqdm
+umap-learn
