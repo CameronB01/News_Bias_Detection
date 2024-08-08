@@ -3,7 +3,7 @@ plotly
 streamlit
 seaborn
 matplotlib
-sklearn
+scikit-learn
 wordcloud
 joblib
 spacy
