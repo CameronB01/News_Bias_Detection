@@ -18,7 +18,7 @@ from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-stop_words = set(stopwords.words("english"))
+# stop_words = set(stopwords.words("english"))
 import time
 
 import torch
