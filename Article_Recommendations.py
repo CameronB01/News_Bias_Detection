@@ -291,21 +291,8 @@ def calculate_similarity_with_single_document(documents, single_document):
     - cosine_similarities (numpy.ndarray): An array of cosine similarity scores between the single document and each document in the list.
     """
 
-    # entity_docs = []
-    # total_docs = len(documents)
-
-    # # Set up Streamlit progress bar and status text
-    # progress_text = "Operation in progress. Please wait..."
-    # my_bar = st.progress(0, text=progress_text)
-
-    # for i, doc in enumerate(documents):
-    #     entity_docs.append(extract_entities(doc))
-    #     my_bar.progress((i + 1) / total_docs, text=progress_text)
 
     single_entity_doc = extract_entities(single_document)
-    # entities_list = list(dict.fromkeys(single_entity_doc.split(' ')))
-    # filtered_entities_list = [word for word in entities_list if word.lower() not in stop_words]
-    # filtered_entities_list
     combined_docs = list(documents) + [single_entity_doc]
 
     vectorizer = TfidfVectorizer().fit_transform(combined_docs)

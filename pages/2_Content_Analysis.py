@@ -36,35 +36,6 @@ This page provides an in-depth analysis of the distribution of article lengths, 
 """)
 
 
-
-
-
-
-
-# main_list['article_length'] = main_list['text'].apply(lambda x: len(str(x).split()))
-
-# # Create a Streamlit app
-# st.title('Distribution of Article Lengths')
-
-# # Create the plot
-# fig, ax = plt.subplots(figsize=(12, 6))
-# sns.histplot(data=main_list, x='article_length', bins=100, kde=True, ax=ax)
-# ax.set_title('Distribution of Article Lengths')
-# ax.set_xlabel('Article Length (words)')
-# ax.set_ylabel('Frequency')
-# plt.tight_layout()
-
-# # Display the plot in Streamlit
-# st.pyplot(fig)
-
-
-
-
-# main_list['article_length'] = main_list['text'].apply(lambda x: len(str(x).split()))
-
-# Create a Streamlit app
-# st.title('Distribution of Article Lengths')
-
 # Create the Plotly histogram
 fig = px.histogram(
     main_list[main_list['word_count'] < 10000],  # Filter out extreme outliers
@@ -102,24 +73,6 @@ st.markdown("""
 
 
 
-# all_text = ' '.join(str(entity) for entity in main_list['entities'] if isinstance(entity, str))
-
-# # Create a Streamlit app
-# st.title('Word Cloud of All Articles')
-
-# # Generate the word cloud
-# wordcloud = WordCloud(width=800, height=400, background_color='white').generate(all_text)
-
-# # Create the plot
-# fig, ax = plt.subplots(figsize=(10, 5))
-# ax.imshow(wordcloud, interpolation='bilinear')
-# ax.axis('off')
-# ax.set_title('Word Cloud of All Articles')
-# plt.tight_layout()
-
-# # Display the plot in Streamlit
-# st.pyplot(fig)
-
 
 
 # Combine all entity text into one large string
@@ -145,9 +98,6 @@ fig.update_layout(
     yaxis=dict(showticklabels=False, visible=False),
     margin=dict(l=0, r=0, t=30, b=0),  # Adjust margins to fit the title nicely
 )
-
-# Display the Plotly image in Streamlit
-# st.title('Word Cloud of All Articles')
 st.plotly_chart(fig, use_container_width=True)
 
 
@@ -174,35 +124,45 @@ st.markdown("""
 
 
 
-# Count the occurrences of each topic
-topic_counts = main_list['dominant_topic_text_short'].value_counts().reset_index()
-topic_counts.columns = ['topic', 'count']
+topic_sentiment_counts = main_list.groupby(['dominant_topic_text_short', 'sentiment']).size().reset_index(name='count')
 
-# Create the Plotly bar chart
+# Step 2: Pivot the DataFrame to get sentiment counts for each topic
+pivot_df = topic_sentiment_counts.pivot(index='dominant_topic_text_short', columns='sentiment', values='count').fillna(0)
+
+# Step 3: Sort the DataFrame by the total count across all sentiments
+pivot_df['total'] = pivot_df.sum(axis=1)
+pivot_df = pivot_df.sort_values('total', ascending=True).drop(columns='total')
+
+custom_colors = {
+    'Positive': '#83c9ff',  # Blue
+    'Negative': '#ffabab',  # Red
+    'Neutral': '#0068c9'    # Green
+}
+
+# Step 4: Create the Plotly stacked bar chart
 fig = px.bar(
-    topic_counts,
-    x='count',
-    y='topic',
+    pivot_df,
+    x=pivot_df.columns,
+    y=pivot_df.index,
     orientation='h',
     title=' ',
-    labels={'count': 'Number of Articles', 'topic': 'Topic'},
-    # width=1200,  # Width of the figure
-    height=900,  # Height of the figure
-    # color='topic',  # Use topic for color differentiation
-    # color_discrete_sequence=px.colors.qualitative.Pastel  # Use a pastel color palette
+    labels={'value': 'Number of Articles', 'index': 'Topic'},
+    height=900,
+    color_discrete_map=custom_colors
 )
 
 # Customize layout
 fig.update_layout(
+    barmode='stack',
     xaxis_title='Number of Articles',
     yaxis_title='Topic',
     yaxis=dict(categoryorder='total ascending'),  # Order topics by count
     title_x=0.5,  # Center the title
-    showlegend=False  # Optionally hide legend if not needed
+    showlegend=True, 
+    legend_title_text='Sentiment',  # Custom legend title
 )
 
 # Display the Plotly chart in Streamlit
-# st.title('Distribution of Articles by Topic')
 st.plotly_chart(fig, use_container_width=True)
 
 

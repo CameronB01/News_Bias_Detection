@@ -30,32 +30,6 @@ This page presents a quick look at the infromation currently in our dataset as w
 """)
 
 
-
-
-
-
-# # Create a Streamlit app
-# st.title('Bias Distribution')
-
-# # Create the Seaborn count plot
-# fig, ax = plt.subplots()
-
-# # Plot with Seaborn
-# sns.countplot(x=main_list['bias'], ax=ax)
-
-# # Customize the plot
-# ax.set_xlabel('Bias')
-# ax.set_ylabel('Count')
-# ax.set_title('Bias Distribution')
-
-# # Customize x-tick labels
-# ax.set_xticklabels(['Center', 'Left', 'Right'])
-
-# # Display the plot in Streamlit
-# st.pyplot(fig)
-
-
-
 mapping = {0: 'Center', 1: 'Left', 2: 'Right'}
 
 main_list['bias'] = main_list['bias'].map(mapping)
